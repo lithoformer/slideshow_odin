@@ -99,11 +99,16 @@ const init = (() => {
             displayPhoto(prevPhoto, currPhoto);
         }
         else {
+            prevPhoto = currPhoto;
             currPhoto--;
-            displayPhoto(prevPhoto, currPhoto);
+            if (currPhoto === -1) {
+                currPhoto = photoList.length - 1;
+                displayPhoto(prevPhoto, currPhoto);
+            }
+            else {
+                displayPhoto(prevPhoto, currPhoto);
+            }
         }
-        if (currPhoto === -1) { currPhoto = photoList.length - 1; }
-        prevPhoto = currPhoto;
     })
 
     right.addEventListener('click', () => {
@@ -112,11 +117,16 @@ const init = (() => {
             displayPhoto(prevPhoto, currPhoto);
         }
         else {
+            prevPhoto = currPhoto;
             currPhoto++;
-            displayPhoto(prevPhoto, currPhoto);
+            if (currPhoto === photoList.length) {
+                currPhoto = 0;
+                displayPhoto(prevPhoto, currPhoto);
+            }
+            else {
+                displayPhoto(prevPhoto, currPhoto);
+            }
         }
-        if (currPhoto === (photoList.length - 1)) { currPhoto = 0; }
-        prevPhoto = currPhoto;
     })
 
     return { frame, left, right, photoList, currPhoto };
@@ -125,13 +135,16 @@ const init = (() => {
 
 function displayPhoto(prevPhoto, currPhoto) {
     console.log(prevPhoto, currPhoto);
-    if (currPhoto) {
+    if (prevPhoto !== null && currPhoto !== null) {
         const current = init.photoList[currPhoto];
         current.style.display = 'flex';
-    }
-    if (prevPhoto) {
         const previous = init.photoList[prevPhoto];
         previous.style.display = 'none';
+        init.frame.insertBefore(current, init.right);
     }
-    init.frame.insertBefore(current, init.right);
+    else {
+        const current = init.photoList[currPhoto];
+        current.style.display = 'flex';
+        init.frame.insertBefore(current, init.right);
+    }
 }
