@@ -110,9 +110,6 @@ const init = (() => {
                     filledCircles[j].style.display = 'none';
                     break;
                 }
-                else {
-                    prevPhoto = null;
-                }
             }
             displayPhoto(prevPhoto, currPhoto);
         })
@@ -165,7 +162,6 @@ const init = (() => {
 })();
 
 function displayPhoto(prevPhoto, currPhoto) {
-    console.log(prevPhoto, currPhoto);
     if (prevPhoto !== null && currPhoto !== null) {
         const current = init.photoList[currPhoto];
         current.style.display = 'flex';
