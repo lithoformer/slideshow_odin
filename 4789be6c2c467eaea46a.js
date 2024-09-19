@@ -157,6 +157,8 @@ const init = (() => {
         displayPhoto(prev, curr);
     })
 
+    advancePhoto(photoList);
+
     return { frame, right, photoList, emptyCircles, filledCircles };
 
 })();
@@ -180,4 +182,23 @@ function displayPhoto(prevPhoto, currPhoto) {
         init.filledCircles[currPhoto].style.display = 'flex';
         init.frame.insertBefore(current, init.right);
     }
+}
+
+function advancePhoto(photoList) {
+    setTimeout(() => {
+        let prev = null;
+        let curr = null;
+        for (let i = 0; i < photoList.length; i++) {
+            if (photoList[i].style.display === 'flex') {
+                prev = i;
+                curr = ++i;
+                break;
+            }
+        }
+        if (curr === photoList.length || curr === null) {
+            curr = 0;
+        }
+        displayPhoto(prev, curr);
+        advancePhoto(photoList);
+    }, 5000);
 }
